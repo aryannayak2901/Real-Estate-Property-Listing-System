@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block title %} login {% endblock title %}
+
+{% block head %}
+
+{% comment %} <link rel="stylesheet" href="static/css/login.css" /> {% endcomment %}
+
+<style>
+  body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+  }
+  .profile-container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
+  }
+  .profile-header {
+      background-color: #007bff;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+  }
+  .profile-header h1 {
+      margin: 0;
+  }
+
+  .favorite-places a {
+    text-decoration: none;
+    color: black;
+  }
+
+  .profile-info {
+      padding: 20px;
+      animation: fadeInUp 0.5s ease-in-out;
+      
+  }
+  .favorite-places {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
+  }
+  .place {
+      text-align: center;
+  }
+
+  .wishlist-title{
+    text-align: center;
+    justify-content: center;
+  }
+
+  .place img {
+      width: 40vh;
+      height: 25vh;
+      margin-bottom: 10px;
+  }
+  @keyframes fadeInUp {
+      from {
+          opacity: 0;
+          transform: translateY(20px);
+      }
+      to {
+          opacity: 1;
+          transform: translateY(0);
+      }
+  }
+</style>
+
+{% endblock head %}
+
+{% block body %}
+
+
+
+<div class="profile-container">
+  <div class="profile-header">
+      <h1>{{username}}'s Real Estate Profile</h1>
+  </div>
+  <div class="profile-info">
+      <p><strong>Name:</strong> {{username}}</p>
+      <p><strong>Email:</strong> {{email}}</p>
+      <div class="wishlist-title">
+        <h1>Your WishList</h1>
+      </div>
+      <div class="favorite-places">
+        
+        {% if properties %}
+          {% for property in properties %}
+          <a href="/view_property/{{property.id}}">
+            <div class="place">
+                <img src="/media/{{property.image}}" alt="Favorite Place 1">
+                <p>{{property.property_name}}</p>
+            </div>
+          </a>
+          {% endfor %}
+        {% else %}
+          <p>Your wishlist is empty.</p>
+        {% endif %}
+          <!-- <div class="place">
+              <img src="place2.jpg" alt="Favorite Place 2">
+              <p>Place 2</p>
+          </div> -->
+          <!-- <div class="place">
+              <img src="place3.jpg" alt="Favorite Place 3">
+              <p>Place 3</p>
+          </div> -->
+          <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+      </div>
+      <!-- Add more features as needed -->
+  </div>
+</div>
+
+{% endblock body %}
+
